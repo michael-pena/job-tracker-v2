@@ -1,6 +1,7 @@
 package com.mpena.jobtrackerv2.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
@@ -15,17 +16,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationService implements ApplicationOperations {
 
-    @Autowired
     private final ApplicationRepository applicationRepository;
-
-    @Autowired
     private final ApplicationMapper applicationMapper;
 
     @Override
     public ApplicationResponseDTO createApplication(ApplicationCreateDTO createDTO) {
-        Application appcreate = applicationMapper.toEntity(createDTO);
-        System.out.println("Application Created: " + appcreate);
-
-        return applicationMapper.toDTO(applicationRepository.save(appcreate));
+        Application appCreate = applicationMapper.toEntity(createDTO);
+        return applicationMapper.toDTO(applicationRepository.save(appCreate));
     }
+
+    @Override
+    public void deleteApplication(Integer applicationId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public ApplicationResponseDTO getApplicationById(Integer applicationId) {
+        Optional<Application> optionalResponse = applicationRepository.findById(applicationId);
+
+        if (optionalResponse.isPresent()) {
+            return applicationMapper.toDTO(optionalResponse.get());
+        } else {
+            throw new RuntimeException("Application with id: " + applicationId + " Not Found");
+        }
+    }
+
+    
 }

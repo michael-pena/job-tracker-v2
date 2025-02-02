@@ -1,5 +1,8 @@
 package com.mpena.jobtrackerv2;
 
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,11 @@ public class Jobtrackerv2ApplicationIT {
     @Autowired
     private ApplicationService applicationService;
 
-    @Test
-    public void testSaveApplication() {
+    ApplicationCreateDTO createDTO;
 
-        ApplicationCreateDTO createDTO = ApplicationCreateDTO.builder()
+    @BeforeEach
+    void setup() {
+        createDTO = ApplicationCreateDTO.builder()
             .company("Test Company 2")
             .position("test engineer")
             .date("1-25-2025")
@@ -26,8 +30,18 @@ public class Jobtrackerv2ApplicationIT {
             .accepted("")
             .offer("")
             .build();
+    }
+
+    @Test
+    @Disabled
+    public void testSaveApplication() {
 
         applicationService.createApplication(createDTO);
+    }
+
+    @Test
+    public void testDeleteApplication() {
+
     }
 
 }

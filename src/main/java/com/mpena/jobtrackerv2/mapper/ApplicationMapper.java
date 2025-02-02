@@ -15,5 +15,4 @@ public interface ApplicationMapper {
     Application toEntity(ApplicationCreateDTO applicationCreateDTO);
     Application toEntity(ApplicationUpdateDTO applicationUpdateDTO);
     ApplicationResponseDTO toDTO(Application applicationEntity);
-
 }

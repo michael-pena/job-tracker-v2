@@ -9,7 +9,7 @@ public class Jobtrackerv2Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Jobtrackerv2Application.class, args);
 	}
-	//TODO: add service methods
-	//TODO: make sure the app can connect to the sqlite db
+	//TODO: add service method
 	//TODO: Implement paging and sorting
+	//TODO: Implement the RUD methods
 }

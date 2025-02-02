@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class ApplicationCreateDTO {
-     
+    
     private String company;
     private String position;
     private String date;

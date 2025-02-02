@@ -5,4 +5,6 @@ import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
 
 public interface ApplicationOperations {
     ApplicationResponseDTO createApplication(ApplicationCreateDTO createDTO);
+    ApplicationResponseDTO getApplicationById(Integer applicationId);
+    void deleteApplication(Integer applicationId);
 }
