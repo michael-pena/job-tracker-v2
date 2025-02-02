@@ -10,11 +10,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Accessors(chain = true)
 public class Application {
     
@@ -24,16 +29,16 @@ public class Application {
     @Column(name="id", updatable = false, nullable = false)
     private Integer id;
 
-    @Column(name = "company", nullable = false)
+    @Column(name = "company")
     private String company;
 
-    @Column(name = "position", nullable = false)
+    @Column(name = "position")
     private String position;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private String date;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private String status;
     
     @Column(name = "offer")

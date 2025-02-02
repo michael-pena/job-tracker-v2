@@ -13,7 +13,7 @@ public interface ApplicationMapper {
     ApplicationMapper INSTANCE = Mappers.getMapper(ApplicationMapper.class);
 
     Application toEntity(ApplicationCreateDTO applicationCreateDTO);
-    Application toEntity(ApplicationUpdateDTO applicationCreateDTO);
-    ApplicationResponseDTO toDTO(Application applicationCreateDTO);
+    Application toEntity(ApplicationUpdateDTO applicationUpdateDTO);
+    ApplicationResponseDTO toDTO(Application applicationEntity);
 
 }

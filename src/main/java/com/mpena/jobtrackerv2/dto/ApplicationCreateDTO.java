@@ -1,5 +1,16 @@
 package com.mpena.jobtrackerv2.dto;
 
-public class ApplicationCreateDTO {
+import lombok.Builder;
+import lombok.Data;
 
+@Builder
+@Data
+public class ApplicationCreateDTO {
+     
+    private String company;
+    private String position;
+    private String date;
+    private String status;
+    private String offer;
+    private String accepted;
 }

@@ -8,6 +8,7 @@ class Jobtrackerv2ApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }
