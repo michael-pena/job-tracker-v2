@@ -11,5 +11,5 @@ public class Jobtrackerv2Application {
 	}
 	//TODO: add service method
 	//TODO: Implement paging and sorting
-	//TODO: Implement the RUD methods
+	//TODO: Implement the Update functionality methods
 }

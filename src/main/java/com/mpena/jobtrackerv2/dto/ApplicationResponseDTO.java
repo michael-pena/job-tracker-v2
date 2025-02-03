@@ -1,5 +1,7 @@
 package com.mpena.jobtrackerv2.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,6 +9,7 @@ import lombok.Data;
 @Data
 public class ApplicationResponseDTO {
 
+    @JsonIgnore
     private Integer id;
     private String company;
     private String position;

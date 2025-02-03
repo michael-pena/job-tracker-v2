@@ -1,7 +1,9 @@
 package com.mpena.jobtrackerv2.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
@@ -27,8 +29,10 @@ public class ApplicationService implements ApplicationOperations {
 
     @Override
     public void deleteApplication(Integer applicationId) {
-        // TODO Auto-generated method stub
-        
+        Application foundApplication = applicationRepository.findById(applicationId)
+            .orElseThrow( () -> new RuntimeException("Application with id: " + applicationId + " Not Found"));
+
+        applicationRepository.delete(foundApplication);   
     }
 
     @Override
@@ -42,5 +46,12 @@ public class ApplicationService implements ApplicationOperations {
         }
     }
 
+    @Override
+    public List<ApplicationResponseDTO> getAllApplications() {
+        return applicationRepository.findAll()
+            .stream()
+            .map(applicationMapper::toDTO)
+            .toList();
+    }
     
 }
