@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
 import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
 import com.mpena.jobtrackerv2.mapper.ApplicationMapper;
 import com.mpena.jobtrackerv2.model.Application;
 import com.mpena.jobtrackerv2.repository.ApplicationRepository;
@@ -25,6 +26,21 @@ public class ApplicationService implements ApplicationOperations {
     public ApplicationResponseDTO createApplication(ApplicationCreateDTO createDTO) {
         Application appCreate = applicationMapper.toEntity(createDTO);
         return applicationMapper.toDTO(applicationRepository.save(appCreate));
+    }
+
+    @Override
+    public ApplicationResponseDTO updateApplicationById(Integer applicationId, ApplicationUpdateDTO updateDTO) {
+        Application appUpdate = applicationRepository.findById(applicationId)
+            .orElseThrow( () -> new RuntimeException("Application with id: " + applicationId + " Not Found"));
+
+        appUpdate.setCompany(updateDTO.getCompany())
+            .setDate(updateDTO.getDate())
+            .setPosition(updateDTO.getPosition())
+            .setAccepted(updateDTO.getAccepted())
+            .setStatus(updateDTO.getStatus())
+            .setOffer(updateDTO.getOffer());
+
+        return applicationMapper.toDTO( applicationRepository.save(appUpdate));
     }
 
     @Override

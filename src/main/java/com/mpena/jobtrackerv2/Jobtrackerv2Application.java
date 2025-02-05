@@ -12,4 +12,6 @@ public class Jobtrackerv2Application {
 	//TODO: add service method
 	//TODO: Implement paging and sorting
 	//TODO: Implement the Update functionality methods
+	//TODO: Implement the error handling - bad requests http methods 400/500
+	//TODO: Add the swaggerui - springrest docs
 }
