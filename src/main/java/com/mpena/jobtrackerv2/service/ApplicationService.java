@@ -3,7 +3,8 @@ package com.mpena.jobtrackerv2.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
@@ -43,6 +44,7 @@ public class ApplicationService implements ApplicationOperations {
         return applicationMapper.toDTO( applicationRepository.save(appUpdate));
     }
 
+
     @Override
     public void deleteApplication(Integer applicationId) {
         Application foundApplication = applicationRepository.findById(applicationId)
@@ -69,5 +71,12 @@ public class ApplicationService implements ApplicationOperations {
             .map(applicationMapper::toDTO)
             .toList();
     }
+
+    @Override
+    public Page<ApplicationResponseDTO> getPageOfApplications(Pageable pageable) {
+        return applicationRepository.findAll(pageable)
+            .map(applicationMapper::toDTO);
+    }
+    
     
 }

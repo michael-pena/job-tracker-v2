@@ -11,7 +11,7 @@ public class Jobtrackerv2Application {
 	}
 
 	//TODO: Implement paging and sorting
-	//TODO: Implement validation on DTOs and Entities
+	//TODO: Implement validation on Entities
 	//TODO: Implement the error handling - bad requests, invalid data http methods 400/500
 	//TODO: Add the swaggerui - springrest docs
 	//TODO: add spring security - user auth with jwt
