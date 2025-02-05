@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
 import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
 import com.mpena.jobtrackerv2.service.ApplicationService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -32,13 +36,22 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping(APPLICATION_PATH)
-    public ResponseEntity<ApplicationResponseDTO> saveNewApplication(@RequestBody ApplicationCreateDTO createDTO) {        
+    public ResponseEntity<ApplicationResponseDTO> saveNewApplication(@RequestBody @Valid ApplicationCreateDTO createDTO) {        
         ApplicationResponseDTO responseDTO = applicationService.createApplication(createDTO);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add(HttpHeaders.LOCATION, APPLICATION_PATH + "/" + responseDTO.getId());
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(responseHeaders).body(responseDTO);
+    }
+
+    @PutMapping(APPLICATION_PATH_BY_ID)
+    public ResponseEntity<ApplicationResponseDTO> updateApplication(@PathVariable("applicationId") Integer applicationId, @RequestBody @Valid ApplicationUpdateDTO updateDTO) {        
+        ApplicationResponseDTO responseDTO = applicationService.updateApplicationById(applicationId, updateDTO);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add(HttpHeaders.LOCATION, APPLICATION_PATH + "/" + responseDTO.getId());
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(responseDTO);
     }
 
     @GetMapping(APPLICATION_PATH_BY_ID)
@@ -53,7 +66,6 @@ public class ApplicationController {
         return ResponseEntity.ok().body(applicationListDTO);
     }
     
-
     @DeleteMapping(APPLICATION_PATH_BY_ID)
     public ResponseEntity<?> deleteApplicationById(@PathVariable("applicationId") Integer applicationId) {
         applicationService.deleteApplication(applicationId);
