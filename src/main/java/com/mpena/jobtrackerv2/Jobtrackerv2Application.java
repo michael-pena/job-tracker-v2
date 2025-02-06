@@ -9,8 +9,8 @@ public class Jobtrackerv2Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Jobtrackerv2Application.class, args);
 	}
-	
-	//TODO: Implement the error handling - bad requests, invalid data http methods 400/500 - send concise response with status code and message
+
+	//TODO: Fix the validator logic
 	//TODO: Add better tests, test every layer - add testcontainers for IT tests
 	//TODO: add spring security - user auth with jwt
 	

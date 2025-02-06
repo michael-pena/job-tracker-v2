@@ -28,7 +28,7 @@ import lombok.experimental.Accessors;
 @ToString
 @Accessors(chain = true)
 @ValidOfferForInterview
-@ValidAcceptedValue
+//@ValidAcceptedValue
 public class Application {
     
     @Id

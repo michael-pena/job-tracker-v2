@@ -17,23 +17,19 @@ public class OfferForInterviewValidator implements ConstraintValidator<ValidOffe
     @Override
     public boolean isValid(Application application, ConstraintValidatorContext context) {
 
-        if (application.getStatus().equals(ApplicationStatus.REJECTED.getValue()) || 
-            application.getStatus().equals(ApplicationStatus.NO_RESPONSE.getValue()) ) {
-                String offer = application.getOffer().trim().toLowerCase();
-
-            if ( !offer.isEmpty() || offer != null) {
-                return false;
-            }
+        if (application.getStatus().equals("rejected") || 
+            application.getStatus().equals("no response") ||
+            application.getStatus() == null || application.getStatus().trim().isEmpty()
+            && 
+            (application.getOffer().equals("yes") || application.getOffer().equals("no"))) {
+            return false;
         }
 
-        if (application.getStatus().equals(ApplicationStatus.INTERVIEW.getValue())) {
+        if ("interview".equals(application.getStatus())) {
             String offer = application.getOffer();
-            if (offer == null) {
-                return false;
-            }
-            return offer.equals("yes") || offer.equals("no");
+            return offer == null || offer.trim().isEmpty() || "yes".equalsIgnoreCase(offer) || "no".equalsIgnoreCase(offer);
         }
-        return true;
+        return false; 
     }
     
 }

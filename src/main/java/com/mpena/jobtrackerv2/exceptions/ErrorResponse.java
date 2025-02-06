@@ -1,5 +1,7 @@
 package com.mpena.jobtrackerv2.exceptions;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

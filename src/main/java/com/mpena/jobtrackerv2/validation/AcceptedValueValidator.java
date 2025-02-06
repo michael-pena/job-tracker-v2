@@ -18,14 +18,16 @@ public class AcceptedValueValidator implements ConstraintValidator<ValidAccepted
     @Override
     public boolean isValid(Application application, ConstraintValidatorContext context) {
 
-        if (application.getStatus().equals(ApplicationStatus.INTERVIEW.getValue()) && 
-            application.getOffer().trim().toLowerCase().equals("yes")) {
+        if (application.getAccepted() != null)
+        {
+            if ("interview".equals(application.getStatus()) && "yes".equalsIgnoreCase(application.getOffer())) {
+                String accepted = application.getAccepted();
+                return accepted == null || accepted.trim().isEmpty() || "yes".equalsIgnoreCase(accepted) || "no".equalsIgnoreCase(accepted);
+            }
 
-            String accepted = application.getAccepted().trim().toLowerCase();
-            return accepted.equals("yes") || accepted.equals("no"); 
         }
-        
-        return false;
+
+        return true; // If status is not "interview" or offer is not "yes", no validation needed for accepted
     }
     
 }
