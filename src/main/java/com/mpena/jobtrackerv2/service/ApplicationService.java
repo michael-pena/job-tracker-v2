@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
 import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
 import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.exceptions.NotFoundException;
 import com.mpena.jobtrackerv2.mapper.ApplicationMapper;
 import com.mpena.jobtrackerv2.model.Application;
 import com.mpena.jobtrackerv2.repository.ApplicationRepository;
@@ -32,7 +33,7 @@ public class ApplicationService implements ApplicationOperations {
     @Override
     public ApplicationResponseDTO updateApplicationById(Integer applicationId, ApplicationUpdateDTO updateDTO) {
         Application appUpdate = applicationRepository.findById(applicationId)
-            .orElseThrow( () -> new RuntimeException("Application with id: " + applicationId + " Not Found"));
+            .orElseThrow( () -> new NotFoundException("Application with id: " + applicationId + " Not Found"));
 
         appUpdate.setCompany(updateDTO.getCompany())
             .setDate(updateDTO.getDate())
@@ -48,7 +49,7 @@ public class ApplicationService implements ApplicationOperations {
     @Override
     public void deleteApplication(Integer applicationId) {
         Application foundApplication = applicationRepository.findById(applicationId)
-            .orElseThrow( () -> new RuntimeException("Application with id: " + applicationId + " Not Found"));
+            .orElseThrow( () -> new NotFoundException("Application with id: " + applicationId + " Not Found"));
 
         applicationRepository.delete(foundApplication);   
     }
@@ -60,7 +61,7 @@ public class ApplicationService implements ApplicationOperations {
         if (optionalResponse.isPresent()) {
             return applicationMapper.toDTO(optionalResponse.get());
         } else {
-            throw new RuntimeException("Application with id: " + applicationId + " Not Found");
+            throw new NotFoundException("Application with id: " + applicationId + " Not Found");
         }
     }
 
