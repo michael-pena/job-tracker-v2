@@ -1,13 +1,11 @@
 package com.mpena.jobtrackerv2.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,17 +61,14 @@ public class ApplicationController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-    // @GetMapping(APPLICATION_PATH)
-    // public ResponseEntity<List<ApplicationResponseDTO>> getAllApplications() {
-    //     List<ApplicationResponseDTO> applicationListDTO = applicationService.getAllApplications();
-    //     return ResponseEntity.ok().body(applicationListDTO);
-    // }
-
     @GetMapping(APPLICATION_PATH)
     public ResponseEntity<Page<ApplicationResponseDTO>> getPageOfApplications(
-            @RequestParam(defaultValue = "0", required = false) Integer page,
-            @RequestParam(defaultValue = "10", required = false) Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+        @RequestParam(defaultValue = "0", required = false, name="page") Integer page,
+        @RequestParam(defaultValue = "10", required = false, name = "size") Integer size,
+            @RequestParam(defaultValue = "id", required = false, name = "sortBy") String sortBy,
+            @RequestParam(defaultValue = "asc", required = false, name="sortDir") String sortDir) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDir);
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         Page<ApplicationResponseDTO> applicationPage = applicationService.getPageOfApplications(pageable);
         return ResponseEntity.ok().body(applicationPage);
     }
