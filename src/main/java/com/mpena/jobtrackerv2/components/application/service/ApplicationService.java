@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.service;
+package com.mpena.jobtrackerv2.components.application.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,13 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationCreateDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.components.application.mapper.ApplicationMapper;
+import com.mpena.jobtrackerv2.components.application.model.Application;
+import com.mpena.jobtrackerv2.components.application.repository.ApplicationRepository;
 import com.mpena.jobtrackerv2.exceptions.NotFoundException;
-import com.mpena.jobtrackerv2.mapper.ApplicationMapper;
-import com.mpena.jobtrackerv2.model.Application;
-import com.mpena.jobtrackerv2.repository.ApplicationRepository;
 
 import lombok.RequiredArgsConstructor;
 

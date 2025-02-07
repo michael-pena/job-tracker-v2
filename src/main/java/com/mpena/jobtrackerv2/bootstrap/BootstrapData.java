@@ -9,9 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
-import com.mpena.jobtrackerv2.model.Application;
-import com.mpena.jobtrackerv2.model.ApplicationCSVRecord;
-import com.mpena.jobtrackerv2.repository.ApplicationRepository;
+import com.mpena.jobtrackerv2.components.application.model.Application;
+import com.mpena.jobtrackerv2.components.application.model.ApplicationCSVRecord;
+import com.mpena.jobtrackerv2.components.application.repository.ApplicationRepository;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,14 @@ public class BootstrapData implements CommandLineRunner {
 
     private final ApplicationRepository applicationRepository;
 
+    /**
+     * Runs the bootstrap data loading process.
+     * If the number of records in the application repository is less than 10,
+     * it retrieves data from a CSV file and persists it to the repository.
+     * Used for general testing purposes and testing pagination and sorting.
+     * 
+     * @throws Exception if an error occurs during data loading
+     */
     @Override
     public void run(String... args) throws Exception {
         

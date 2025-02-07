@@ -1,12 +1,12 @@
-package com.mpena.jobtrackerv2.mapper;
+package com.mpena.jobtrackerv2.components.application.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
-import com.mpena.jobtrackerv2.model.Application;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationCreateDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.components.application.model.Application;
 
 @Mapper
 public interface ApplicationMapper {

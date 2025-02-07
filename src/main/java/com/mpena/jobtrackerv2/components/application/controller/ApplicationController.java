@@ -1,8 +1,7 @@
-package com.mpena.jobtrackerv2.controller;
+package com.mpena.jobtrackerv2.components.application.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
-import com.mpena.jobtrackerv2.service.ApplicationService;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationCreateDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.components.application.service.ApplicationService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

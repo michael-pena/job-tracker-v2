@@ -1,6 +1,6 @@
-package com.mpena.jobtrackerv2.validation;
+package com.mpena.jobtrackerv2.components.application.validation;
 
-import com.mpena.jobtrackerv2.model.ApplicationStatus;
+import com.mpena.jobtrackerv2.components.application.model.ApplicationStatus;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

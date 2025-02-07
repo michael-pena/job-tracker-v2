@@ -1,12 +1,9 @@
-package com.mpena.jobtrackerv2.model;
+package com.mpena.jobtrackerv2.components.application.model;
 
-import org.hibernate.annotations.GeneratorType;
+import com.mpena.jobtrackerv2.components.application.validation.ValidAcceptedValue;
+import com.mpena.jobtrackerv2.components.application.validation.ValidApplicationStatus;
+import com.mpena.jobtrackerv2.components.application.validation.ValidOfferForInterview;
 
-import com.mpena.jobtrackerv2.validation.ValidAcceptedValue;
-import com.mpena.jobtrackerv2.validation.ValidApplicationStatus;
-import com.mpena.jobtrackerv2.validation.ValidOfferForInterview;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +31,7 @@ public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    @Column(name="id", updatable = false, nullable = false)
+    @Column(name="id", updatable = false, nullable = false, unique = true)
     private Integer id;
 
     @NotEmpty

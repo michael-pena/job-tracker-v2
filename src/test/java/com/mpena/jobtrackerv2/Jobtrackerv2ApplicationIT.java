@@ -16,14 +16,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.util.ResourceUtils;
 
-import com.mpena.jobtrackerv2.dto.ApplicationCreateDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationResponseDTO;
-import com.mpena.jobtrackerv2.dto.ApplicationUpdateDTO;
-import com.mpena.jobtrackerv2.mapper.ApplicationMapper;
-import com.mpena.jobtrackerv2.model.Application;
-import com.mpena.jobtrackerv2.model.ApplicationCSVRecord;
-import com.mpena.jobtrackerv2.repository.ApplicationRepository;
-import com.mpena.jobtrackerv2.service.ApplicationService;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationCreateDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationResponseDTO;
+import com.mpena.jobtrackerv2.components.application.dto.ApplicationUpdateDTO;
+import com.mpena.jobtrackerv2.components.application.mapper.ApplicationMapper;
+import com.mpena.jobtrackerv2.components.application.model.Application;
+import com.mpena.jobtrackerv2.components.application.model.ApplicationCSVRecord;
+import com.mpena.jobtrackerv2.components.application.repository.ApplicationRepository;
+import com.mpena.jobtrackerv2.components.application.service.ApplicationService;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import jakarta.transaction.Transactional;

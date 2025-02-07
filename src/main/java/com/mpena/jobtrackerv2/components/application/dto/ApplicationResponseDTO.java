@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.dto;
+package com.mpena.jobtrackerv2.components.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

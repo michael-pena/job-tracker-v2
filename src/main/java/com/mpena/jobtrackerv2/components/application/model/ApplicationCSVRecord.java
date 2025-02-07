@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.model;
+package com.mpena.jobtrackerv2.components.application.model;
 
 import com.opencsv.bean.CsvBindByName;
 

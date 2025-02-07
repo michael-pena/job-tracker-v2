@@ -1,7 +1,6 @@
-package com.mpena.jobtrackerv2.validation;
+package com.mpena.jobtrackerv2.components.application.validation;
 
-import com.mpena.jobtrackerv2.model.Application;
-import com.mpena.jobtrackerv2.model.ApplicationStatus;
+import com.mpena.jobtrackerv2.components.application.model.Application;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -10,7 +9,6 @@ public class OfferForInterviewValidator implements ConstraintValidator<ValidOffe
 
     @Override
     public void initialize(ValidOfferForInterview constraintAnnotation) {
-        // // TODO Auto-generated method stub
         // ConstraintValidator.super.initialize(constraintAnnotation);
     }
 

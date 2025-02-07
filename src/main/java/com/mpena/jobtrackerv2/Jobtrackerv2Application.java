@@ -10,9 +10,12 @@ public class Jobtrackerv2Application {
 		SpringApplication.run(Jobtrackerv2Application.class, args);
 	}
 
-	//TODO: Fix the validator logic for accepted
-	//TODO: Add better tests, test every layer - add testcontainers for IT tests
-	//TODO: add jacoco test reports
+	//TODO: add users service and user controller
+	//TODO: add lookup by username, authentication, update password, etc.
+	//TODO: add created and lastupdated to user and application entities
+	//TODO: add users validation on DTOs and Entity
+	//TODO: add users login and registration with spring security
 	//TODO: add spring security - user auth with jwt
-	
+	//TODO: add jacoco test reports
+	//TODO: Add better tests, test every layer - add testcontainers for IT tests
 }

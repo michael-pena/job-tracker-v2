@@ -1,17 +1,14 @@
-package com.mpena.jobtrackerv2.validation;
+package com.mpena.jobtrackerv2.components.application.validation;
 
-import com.mpena.jobtrackerv2.model.Application;
-import com.mpena.jobtrackerv2.model.ApplicationStatus;
+import com.mpena.jobtrackerv2.components.application.model.Application;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 
 public class AcceptedValueValidator implements ConstraintValidator<ValidAcceptedValue, Application> {
 
     @Override
     public void initialize(ValidAcceptedValue constraintAnnotation) {
-        // // TODO Auto-generated method stub
         // ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
