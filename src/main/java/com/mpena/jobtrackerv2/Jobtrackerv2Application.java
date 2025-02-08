@@ -11,6 +11,7 @@ public class Jobtrackerv2Application {
 	}
 
 	//TODO: add users service and user controller
+	//TODO: change Ids from int to long
 	//TODO: add lookup by username, authentication, update password, etc.
 	//TODO: add created and lastupdated to user and application entities
 	//TODO: add users validation on DTOs and Entity

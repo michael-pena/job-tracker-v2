@@ -26,7 +26,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @Column(name="id", updatable=false, nullable=false, unique = true)
-    private int id;
+    private long id;
     
     @Column(name="username", nullable=false, unique = true)
     private String username;

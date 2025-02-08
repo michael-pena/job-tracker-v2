@@ -9,8 +9,8 @@ import com.mpena.jobtrackerv2.components.users.dto.UserUpdateDTO;
 import com.mpena.jobtrackerv2.components.users.model.Users;
 
 @Mapper
-public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+public interface UsersMapper {
+    UsersMapper INSTANCE = Mappers.getMapper(UsersMapper.class);
 
     Users toEntity(UserUpdateDTO userUpdateDTO);
     Users toEntity(UserCreateDTO userCreateDTO);
