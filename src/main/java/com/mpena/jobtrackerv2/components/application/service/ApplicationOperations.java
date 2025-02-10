@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 
 public interface ApplicationOperations {
     ApplicationResponseDTO createApplication(ApplicationCreateDTO createDTO);
-    ApplicationResponseDTO getApplicationById(Integer applicationId);
-    ApplicationResponseDTO updateApplicationById(Integer applicationId, ApplicationUpdateDTO updateDTO);
-    void deleteApplication(Integer applicationId);
+    ApplicationResponseDTO getApplicationById(Long applicationId);
+    ApplicationResponseDTO updateApplicationById(Long applicationId, ApplicationUpdateDTO updateDTO);
+    void deleteApplication(Long applicationId);
     List<ApplicationResponseDTO> getAllApplications();
     Page<ApplicationResponseDTO> getPageOfApplications(Pageable pageable);
 }

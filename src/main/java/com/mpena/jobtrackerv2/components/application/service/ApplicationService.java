@@ -31,7 +31,7 @@ public class ApplicationService implements ApplicationOperations {
     }
 
     @Override
-    public ApplicationResponseDTO updateApplicationById(Integer applicationId, ApplicationUpdateDTO updateDTO) {
+    public ApplicationResponseDTO updateApplicationById(Long applicationId, ApplicationUpdateDTO updateDTO) {
         Application appUpdate = applicationRepository.findById(applicationId)
             .orElseThrow( () -> new NotFoundException("Application with id: " + applicationId + " Not Found"));
 
@@ -47,7 +47,7 @@ public class ApplicationService implements ApplicationOperations {
 
 
     @Override
-    public void deleteApplication(Integer applicationId) {
+    public void deleteApplication(Long applicationId) {
         Application foundApplication = applicationRepository.findById(applicationId)
             .orElseThrow( () -> new NotFoundException("Application with id: " + applicationId + " Not Found"));
 
@@ -55,7 +55,7 @@ public class ApplicationService implements ApplicationOperations {
     }
 
     @Override
-    public ApplicationResponseDTO getApplicationById(Integer applicationId) {
+    public ApplicationResponseDTO getApplicationById(Long applicationId) {
         Optional<Application> optionalResponse = applicationRepository.findById(applicationId);
 
         if (optionalResponse.isPresent()) {

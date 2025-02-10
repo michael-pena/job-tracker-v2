@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.mpena.jobtrackerv2.components.application.model.Application;
 
 @Repository
-public interface ApplicationRepository extends JpaRepository<Application, Integer> {
+public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
 }

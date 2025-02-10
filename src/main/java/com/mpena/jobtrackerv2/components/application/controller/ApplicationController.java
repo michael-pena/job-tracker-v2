@@ -46,7 +46,7 @@ public class ApplicationController {
     }
 
     @PutMapping(APPLICATION_PATH_BY_ID)
-    public ResponseEntity<ApplicationResponseDTO> updateApplication(@PathVariable("applicationId") Integer applicationId, @RequestBody @Valid ApplicationUpdateDTO updateDTO) {        
+    public ResponseEntity<ApplicationResponseDTO> updateApplication(@PathVariable("applicationId") Long applicationId, @RequestBody @Valid ApplicationUpdateDTO updateDTO) {        
         ApplicationResponseDTO responseDTO = applicationService.updateApplicationById(applicationId, updateDTO);
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -55,7 +55,7 @@ public class ApplicationController {
     }
 
     @GetMapping(APPLICATION_PATH_BY_ID)
-    public ResponseEntity<ApplicationResponseDTO> getApplicationById(@PathVariable("applicationId") Integer applicationId) {
+    public ResponseEntity<ApplicationResponseDTO> getApplicationById(@PathVariable("applicationId") Long applicationId) {
         ApplicationResponseDTO responseDTO = applicationService.getApplicationById(applicationId);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
@@ -73,7 +73,7 @@ public class ApplicationController {
     }
     
     @DeleteMapping(APPLICATION_PATH_BY_ID)
-    public ResponseEntity<?> deleteApplicationById(@PathVariable("applicationId") Integer applicationId) {
+    public ResponseEntity<?> deleteApplicationById(@PathVariable("applicationId") Long applicationId) {
         applicationService.deleteApplication(applicationId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

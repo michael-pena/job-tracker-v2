@@ -1,6 +1,5 @@
 package com.mpena.jobtrackerv2.components.application.model;
 
-import com.mpena.jobtrackerv2.components.application.validation.ValidAcceptedValue;
 import com.mpena.jobtrackerv2.components.application.validation.ValidApplicationStatus;
 import com.mpena.jobtrackerv2.components.application.validation.ValidOfferForInterview;
 
@@ -25,14 +24,13 @@ import lombok.experimental.Accessors;
 @ToString
 @Accessors(chain = true)
 @ValidOfferForInterview
-@ValidAcceptedValue
 public class Application {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @Column(name="id", updatable = false, nullable = false, unique = true)
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     @Size(min = 1, max=100, message = "company must be less than 100 characters")
