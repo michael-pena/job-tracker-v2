@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.components.users.dto;
+package com.mpena.jobtrackerv2.components.auth.dto;
 
 import lombok.Builder;
 import lombok.Data;

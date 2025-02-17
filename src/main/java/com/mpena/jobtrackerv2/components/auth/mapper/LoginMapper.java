@@ -1,5 +1,6 @@
-package com.mpena.jobtrackerv2.components.users.mapper;
+package com.mpena.jobtrackerv2.components.auth.mapper;
 
+import com.mpena.jobtrackerv2.components.users.mapper.UsersMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

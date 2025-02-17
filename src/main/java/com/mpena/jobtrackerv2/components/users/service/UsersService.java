@@ -2,14 +2,9 @@ package com.mpena.jobtrackerv2.components.users.service;
 
 import java.util.Optional;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mpena.jobtrackerv2.components.users.dto.LoginRequestDTO;
-import com.mpena.jobtrackerv2.components.users.dto.LoginResponseDTO;
 import com.mpena.jobtrackerv2.components.users.dto.UserCreateDTO;
 import com.mpena.jobtrackerv2.components.users.dto.UserResponseDTO;
 import com.mpena.jobtrackerv2.components.users.dto.UserUpdateDTO;
@@ -28,7 +23,6 @@ public class UsersService implements UsersOperations {
     private final UsersRepository userRepository;
     private final UsersMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public UserResponseDTO createUsers(UserCreateDTO createDTO) {
@@ -46,20 +40,6 @@ public class UsersService implements UsersOperations {
         String hashPassword = passwordEncoder.encode(createDTO.getPassword());
         createDTO.setPassword(hashPassword);
         return userMapper.toDto(userRepository.save(userMapper.toEntity(createDTO)));
-    }
-
-    public LoginResponseDTO apiLogin(LoginRequestDTO authRequestDTO) {
-
-        Authentication authRequest = UsernamePasswordAuthenticationToken.unauthenticated(authRequestDTO.getUsername(), 
-            authRequestDTO.getPassword());
-
-        Authentication authenticationResponse = authenticationManager.authenticate(authRequest);
-
-        if (authenticationResponse.isAuthenticated() && authenticationResponse != null) {
-            //TODO: auth user
-        }
-
-        return null;
     }
 
     @Override

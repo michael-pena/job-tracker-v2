@@ -31,5 +31,9 @@ public class UsersController {
         URI uri = UriComponentsBuilder.fromPath(USERS_PATH_ID).build(responseDTO.getId());
         return ResponseEntity.created(uri).body(responseDTO);
     }
+
+    //TODO: create user login / api login endpoint
     
+
+
 }
