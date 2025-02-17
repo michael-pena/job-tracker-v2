@@ -1,5 +1,6 @@
 package com.mpena.jobtrackerv2.components.users.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -16,12 +18,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@Accessors(chain = true)
 @EqualsAndHashCode(exclude = "users")
 public class Authority implements GrantedAuthority {
 
@@ -36,7 +40,7 @@ public class Authority implements GrantedAuthority {
 
     @ManyToMany(mappedBy = "authorities")
     @ToString.Exclude
-    private Set<Users> users;
+    private Set<Users> users = new HashSet<Users>();
 
     @Override
     public String getAuthority() {

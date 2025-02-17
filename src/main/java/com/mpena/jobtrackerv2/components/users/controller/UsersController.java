@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.mpena.jobtrackerv2.components.users.dto.UserAddAuthorityDTO;
+import com.mpena.jobtrackerv2.components.users.dto.UserAddAuthorityResponseDTO;
 import com.mpena.jobtrackerv2.components.users.dto.UserCreateDTO;
 import com.mpena.jobtrackerv2.components.users.dto.UserResponseDTO;
 import com.mpena.jobtrackerv2.components.users.service.UsersService;
@@ -22,6 +24,7 @@ public class UsersController {
     public static final String USERS_PATH = "/api/v1/user";
     public static final String USERS_PATH_ID = USERS_PATH + "/{userId}";
     public static final String USERS_PATH_REGISTER = USERS_PATH + "/register";
+    public static final String USERS_PATH_AUTHORITY = USERS_PATH + "/authority";
 
     private final UsersService usersService;
 
@@ -32,8 +35,10 @@ public class UsersController {
         return ResponseEntity.created(uri).body(responseDTO);
     }
 
-    //TODO: create user login / api login endpoint
+    @PostMapping(USERS_PATH_AUTHORITY)
+    public ResponseEntity<UserAddAuthorityResponseDTO> postMethodName(@RequestBody UserAddAuthorityDTO addAuthorityDTO) {
+        UserAddAuthorityResponseDTO responseDTO = usersService.addUserAuthortiy(addAuthorityDTO);
+        return ResponseEntity.ok().body(responseDTO);
+    }
     
-
-
 }

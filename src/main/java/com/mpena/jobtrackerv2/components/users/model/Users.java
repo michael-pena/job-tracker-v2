@@ -1,9 +1,7 @@
 package com.mpena.jobtrackerv2.components.users.model;
 
 import java.util.Collection;
-import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -17,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +29,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@EqualsAndHashCode(exclude = "authorities")
 public class Users implements UserDetails {
 
     @Id
@@ -48,10 +48,10 @@ public class Users implements UserDetails {
     @JoinTable
     (name = "user_authority", joinColumns = @JoinColumn(name="user_id"), 
         inverseJoinColumns= @JoinColumn(name="authority_id"))
-    private Set<Authority> authorities;
+    private Collection<Authority> authorities;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Authority> getAuthorities() {
         return authorities;
     }
     

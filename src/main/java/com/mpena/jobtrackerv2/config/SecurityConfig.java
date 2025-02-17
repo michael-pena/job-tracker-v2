@@ -37,7 +37,7 @@ public class SecurityConfig {
     private final RsaKeyProperties jwtConfigProperties;
 
     private final static String[] allowedPaths = {UsersController.USERS_PATH_REGISTER, AuthController.AUTH_TOKEN};
-    private final static String[] authenticatedPaths = {ApplicationController.APPLICATION_PATH + "**"};
+    private final static String[] authenticatedPaths = {ApplicationController.APPLICATION_PATH + "**", UsersController.USERS_PATH_AUTHORITY + "**"};
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
