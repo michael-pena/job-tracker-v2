@@ -12,6 +12,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
@@ -27,6 +28,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -37,7 +40,6 @@ public class SecurityConfig {
     private final RsaKeyProperties jwtConfigProperties;
 
     private final static String[] allowedPaths = {UsersController.USERS_PATH_REGISTER, AuthController.AUTH_TOKEN};
-    private final static String[] authenticatedPaths = {ApplicationController.APPLICATION_PATH + "**", UsersController.USERS_PATH_AUTHORITY + "**"};
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -49,13 +51,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests( (requests) -> {
                     requests
                             .requestMatchers(allowedPaths).permitAll()
-                            .requestMatchers(authenticatedPaths).authenticated();
+                            .requestMatchers(HttpMethod.GET, ApplicationController.APPLICATION_PATH, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_read")
+                            .requestMatchers(HttpMethod.POST, ApplicationController.APPLICATION_PATH).hasAuthority("SCOPE_edit")
+                            .requestMatchers(HttpMethod.PUT, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_edit")
+                            .requestMatchers(HttpMethod.DELETE, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_edit")
+                            .requestMatchers(UsersController.USERS_PATH_AUTHORITY).hasAuthority("SCOPE_admin");
+                            //TODO: Add the RUD endpoints for users - has authority: SCOPE_Admin
+                            //TODO: permitAll() to the swagger pages
                 } )
                 .oauth2ResourceServer(oauth2Config -> oauth2Config.jwt(Customizer.withDefaults()))
                 .httpBasic(Customizer.withDefaults())
             .build();
     }
-
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -87,5 +94,20 @@ public class SecurityConfig {
 
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
+    }
+
+    @Bean
+    public JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter() {
+        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
+        converter.setAuthorityPrefix("SCOPE_");
+        converter.setAuthoritiesClaimName("scopes");
+        return converter;
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter());
+        return converter;
     }
 }

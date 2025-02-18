@@ -13,6 +13,4 @@ public interface UsersOperations {
     UserResponseDTO updateUsers(long userId, UserUpdateDTO updateDTO);
     void deleteUsers(long userId);
     UserAddAuthorityResponseDTO addUserAuthortiy(UserAddAuthorityDTO addAuthorityDTO);
-    //login user
-    //authenticate user
 }

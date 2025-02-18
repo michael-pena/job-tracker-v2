@@ -3,9 +3,11 @@ package com.mpena.jobtrackerv2.components.auth.service;
 import com.mpena.jobtrackerv2.components.auth.dto.LoginRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -25,16 +27,23 @@ public class AuthService implements AuthOperations{
     @Override
     public String generateToken(LoginRequestDTO loginRequestDTO) {
 
-        Authentication authRequest = UsernamePasswordAuthenticationToken
-                .unauthenticated(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
+        try {
+            Authentication authRequest = new UsernamePasswordAuthenticationToken(
+                loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
 
-        Authentication authenticationResponse = authenticationManager.authenticate(authRequest);
+            Authentication authenticationResponse = authenticationManager.authenticate(authRequest);
 
-        if (authenticationResponse != null  && authenticationResponse.isAuthenticated()) {
-            return createToken(authenticationResponse);
+            if (authenticationResponse.isAuthenticated()) {
+                return createToken(authenticationResponse);
+            }
+
+            throw new BadCredentialsException("Authentication Failed!");
+
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Invalid username or password!", e);
+        } catch (Exception e) {
+            throw new RuntimeException("An unexpected error occurred during authentication", e);
         }
-
-        return "";
     }
 
     private String createToken(Authentication authentication) {
@@ -45,6 +54,11 @@ public class AuthService implements AuthOperations{
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
+        JwsHeader headers = JwsHeader.with(() ->"RS256")
+                    .type("JWT")
+                    .build();
+        
+        //TODO: add better claims - regular claims
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("JobTracker")
                 .issuedAt(now)
@@ -54,6 +68,6 @@ public class AuthService implements AuthOperations{
                 .claim("username", authentication.getName())
                 .build();
 
-        return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return this.encoder.encode(JwtEncoderParameters.from(headers, claims)).getTokenValue();
     }
 }

@@ -3,15 +3,22 @@ package com.mpena.jobtrackerv2.bootstrap;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import com.mpena.jobtrackerv2.components.application.model.Application;
 import com.mpena.jobtrackerv2.components.application.model.ApplicationCSVRecord;
 import com.mpena.jobtrackerv2.components.application.repository.ApplicationRepository;
+import com.mpena.jobtrackerv2.components.users.model.Authority;
+import com.mpena.jobtrackerv2.components.users.model.Users;
+import com.mpena.jobtrackerv2.components.users.repository.AuthorityRepository;
+import com.mpena.jobtrackerv2.components.users.repository.UsersRepository;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +28,15 @@ import lombok.RequiredArgsConstructor;
 public class BootstrapData implements CommandLineRunner {
 
     private final ApplicationRepository applicationRepository;
+    private final UsersRepository usersRepository;
+    private final AuthorityRepository authorityRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${admin.default.username}")
+    private String adminUsername;
+
+    @Value("${admin.default.password}")
+    private String adminPassword;
 
     /**
      * Runs the bootstrap data loading process.
@@ -37,7 +53,21 @@ public class BootstrapData implements CommandLineRunner {
             List<ApplicationCSVRecord> applicationCSVRecords = getCSVData();
             persistCSVData(applicationCSVRecords);
         }
-        
+
+        if (usersRepository.findByUsername(adminUsername).isEmpty()) {
+            
+            Authority adminAuth = authorityRepository.findByAuthority("admin")
+                .orElseGet(() -> authorityRepository.save(new Authority().setAuthority("admin")));
+
+            Users adminUser = new Users()
+                .setUsername(adminUsername)
+                .setPassword(passwordEncoder.encode(adminPassword))
+                .setAuthorities(Collections.singleton(adminAuth));
+
+            usersRepository.save(adminUser);
+            adminAuth.getUsers().add(adminUser);
+        }
+
     }
 
     public void persistCSVData(List<ApplicationCSVRecord> csvRecords) {

@@ -77,16 +77,9 @@ public class UsersService implements UsersOperations {
             throw new AlreadyExistsException("Role: " + authority + " already exists for user: " + username);
         }
 
-        //TODO: check if authority / scope is in the enums list of allowed scopes
-        Authority savedAuthority;
-
-        if ( !authorityRepository.findByAuthority(authority).isPresent()) {
-            authorityRepository.save(new Authority().setAuthority(authority));
-        }
-
-        savedAuthority = authorityRepository.findByAuthority(authority).orElseThrow( () -> {
-            throw new NotFoundException("Authority: " + authority + " was not found and an error occurred while persisting it.");            
-        });
+        //TODO: check if authority is in list of enums
+        Authority savedAuthority = authorityRepository.findByAuthority(authority)
+            .orElseGet(() -> authorityRepository.save(new Authority().setAuthority(authority)));
 
         savedAuthority.getUsers().add(userFound);
         userFound.getAuthorities().add(savedAuthority);

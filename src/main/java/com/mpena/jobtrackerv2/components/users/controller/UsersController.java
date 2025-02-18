@@ -29,16 +29,17 @@ public class UsersController {
     private final UsersService usersService;
 
     @PostMapping(USERS_PATH_REGISTER)
-    public ResponseEntity<UserResponseDTO> postMethodName(@RequestBody UserCreateDTO userDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO userDTO) {
         UserResponseDTO responseDTO = usersService.createUsers(userDTO);
         URI uri = UriComponentsBuilder.fromPath(USERS_PATH_ID).build(responseDTO.getId());
         return ResponseEntity.created(uri).body(responseDTO);
     }
 
     @PostMapping(USERS_PATH_AUTHORITY)
-    public ResponseEntity<UserAddAuthorityResponseDTO> postMethodName(@RequestBody UserAddAuthorityDTO addAuthorityDTO) {
+    public ResponseEntity<UserAddAuthorityResponseDTO> addAuthorityToUser(@RequestBody UserAddAuthorityDTO addAuthorityDTO) {
         UserAddAuthorityResponseDTO responseDTO = usersService.addUserAuthortiy(addAuthorityDTO);
         return ResponseEntity.ok().body(responseDTO);
     }
     
+    //TODO: create the RUD endpoints for managing users
 }
