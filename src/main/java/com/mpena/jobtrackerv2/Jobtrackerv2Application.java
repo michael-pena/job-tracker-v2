@@ -16,7 +16,6 @@ public class Jobtrackerv2Application {
 
 	//TODO: add created and lastupdated to user and application entities
 	//TODO: add validation on DTOs and Entities
-	//TODO: configure the swagger pages to get a token for making requests - secure it
 	//TODO: add jacoco test reports
 	//TODO: update the readme
 	//TODO: Add better tests, test every layer - add testcontainers for IT tests
