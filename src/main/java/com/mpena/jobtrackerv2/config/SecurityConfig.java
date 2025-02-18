@@ -31,6 +31,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +40,7 @@ public class SecurityConfig {
 
     private final RsaKeyProperties jwtConfigProperties;
 
-    private final static String[] allowedPaths = {UsersController.USERS_PATH_REGISTER, AuthController.AUTH_TOKEN};
+    private final static String[] allowedPaths = {UsersController.USERS_PATH_REGISTER, AuthController.AUTH_TOKEN, "/v3/api-docs/**", "/swagger-ui/**", "/error**"};
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -51,13 +52,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests( (requests) -> {
                     requests
                             .requestMatchers(allowedPaths).permitAll()
-                            .requestMatchers(HttpMethod.GET, ApplicationController.APPLICATION_PATH, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_read")
-                            .requestMatchers(HttpMethod.POST, ApplicationController.APPLICATION_PATH).hasAuthority("SCOPE_edit")
-                            .requestMatchers(HttpMethod.PUT, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_edit")
-                            .requestMatchers(HttpMethod.DELETE, ApplicationController.APPLICATION_PATH_BY_ID).hasAuthority("SCOPE_edit")
+                            .requestMatchers(HttpMethod.GET, ApplicationController.APPLICATION_PATH, ApplicationController.APPLICATION_PATH_BY_ID).hasAnyAuthority("SCOPE_read", "SCOPE_admin")
+                            .requestMatchers(HttpMethod.POST, ApplicationController.APPLICATION_PATH).hasAnyAuthority("SCOPE_edit", "SCOPE_admin")
+                            .requestMatchers(HttpMethod.PUT, ApplicationController.APPLICATION_PATH_BY_ID).hasAnyAuthority("SCOPE_edit", "SCOPE_admin")
+                            .requestMatchers(HttpMethod.DELETE, ApplicationController.APPLICATION_PATH_BY_ID).hasAnyAuthority("SCOPE_edit", "SCOPE_admin")
                             .requestMatchers(UsersController.USERS_PATH_AUTHORITY).hasAuthority("SCOPE_admin");
                             //TODO: Add the RUD endpoints for users - has authority: SCOPE_Admin
-                            //TODO: permitAll() to the swagger pages
                 } )
                 .oauth2ResourceServer(oauth2Config -> oauth2Config.jwt(Customizer.withDefaults()))
                 .httpBasic(Customizer.withDefaults())
