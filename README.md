@@ -31,8 +31,6 @@ An over-engineered backend CRUD REST API for keeping track of jobs I've applied 
 
 ## Installation and Execution
 
-Sigue estos pasos para descargar y ejecutar el proyecto en tu máquina utilizando Docker Compose:
-
 1. Clone the repository:
 
     ```bash
