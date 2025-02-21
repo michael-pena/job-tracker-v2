@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LoginRequestDTO {
-    String username;
-    String password;
+public class TokenResponseDTO {
+    String token; // access token
 }

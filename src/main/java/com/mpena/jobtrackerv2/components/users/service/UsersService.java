@@ -44,8 +44,7 @@ public class UsersService implements UsersOperations {
             throw new AlreadyExistsException("User with username: " + usernameDTO + " already exists.");
         }
 
-        String hashPassword = passwordEncoder.encode(createDTO.getPassword());
-        createDTO.setPassword(hashPassword);
+        createDTO.setPassword(passwordEncoder.encode(createDTO.getPassword()));
         return userMapper.toDto(userRepository.save(userMapper.toEntity(createDTO)));
     }
 

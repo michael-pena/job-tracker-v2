@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.config;
+package com.mpena.jobtrackerv2.config.security;
 
 import com.mpena.jobtrackerv2.components.application.controller.ApplicationController;
 import com.mpena.jobtrackerv2.components.auth.controller.AuthController;
@@ -31,7 +31,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

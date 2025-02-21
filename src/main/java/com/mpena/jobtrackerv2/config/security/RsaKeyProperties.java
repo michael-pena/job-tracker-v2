@@ -1,4 +1,4 @@
-package com.mpena.jobtrackerv2.config;
+package com.mpena.jobtrackerv2.config.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

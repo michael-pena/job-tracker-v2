@@ -1,10 +1,14 @@
 package com.mpena.jobtrackerv2.components.auth.controller;
 
-import com.mpena.jobtrackerv2.components.auth.dto.LoginRequestDTO;
+import com.mpena.jobtrackerv2.components.auth.dto.TokenRequestDTO;
+import com.mpena.jobtrackerv2.components.auth.dto.TokenResponseDTO;
 import com.mpena.jobtrackerv2.components.auth.service.AuthService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,20 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name = "Auth", 
+    description = "Endpoint for performing authentication to obtain JWT for accessing Application and User endpoints")
 public class AuthController {
-    public static final String AUTH_TOKEN = "api/v1/token";
+    public static final String AUTH_TOKEN = "auth/token";
 
     private final AuthService authService;
     
+    @Operation(summary = "Obtain a JWT", description = "Endpoint for obtaining a JWT using user credentials")
     @PostMapping(AUTH_TOKEN)
-    public ResponseEntity<String> getToken(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<TokenResponseDTO> getToken(@RequestBody @Valid TokenRequestDTO tokenRequestDTO) {
 
-        log.info("Token requested for user: '{}'", loginRequestDTO.getUsername());
+        log.debug("Token requested for user: '{}'", tokenRequestDTO.getUsername());
 
-        String token = authService.generateToken(loginRequestDTO);
+        TokenResponseDTO responseDTO = authService.generateToken(tokenRequestDTO);
 
-        log.info("Result of Auth token: '{}'", token);
-
-        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body(token);
+        return ResponseEntity.ok().body(responseDTO);
     }
 }

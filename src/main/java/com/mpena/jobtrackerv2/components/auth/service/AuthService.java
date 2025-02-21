@@ -1,6 +1,8 @@
 package com.mpena.jobtrackerv2.components.auth.service;
 
-import com.mpena.jobtrackerv2.components.auth.dto.LoginRequestDTO;
+import com.mpena.jobtrackerv2.components.auth.dto.TokenRequestDTO;
+import com.mpena.jobtrackerv2.components.auth.dto.TokenResponseDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,7 +27,7 @@ public class AuthService implements AuthOperations{
     private final JwtEncoder encoder;
 
     @Override
-    public String generateToken(LoginRequestDTO loginRequestDTO) {
+    public TokenResponseDTO generateToken(TokenRequestDTO loginRequestDTO) {
 
         try {
             Authentication authRequest = new UsernamePasswordAuthenticationToken(
@@ -34,7 +36,8 @@ public class AuthService implements AuthOperations{
             Authentication authenticationResponse = authenticationManager.authenticate(authRequest);
 
             if (authenticationResponse.isAuthenticated()) {
-                return createToken(authenticationResponse);
+                String token = createToken(authenticationResponse);
+                return TokenResponseDTO.builder().token(token).build(); 
             }
 
             throw new BadCredentialsException("Authentication Failed!");

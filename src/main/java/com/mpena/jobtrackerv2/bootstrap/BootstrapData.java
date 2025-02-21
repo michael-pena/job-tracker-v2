@@ -1,16 +1,19 @@
 package com.mpena.jobtrackerv2.bootstrap;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import com.mpena.jobtrackerv2.components.application.model.Application;
 import com.mpena.jobtrackerv2.components.application.model.ApplicationCSVRecord;
@@ -83,9 +86,13 @@ public class BootstrapData implements CommandLineRunner {
         });
     }
 
-    public List<ApplicationCSVRecord> getCSVData() throws FileNotFoundException {
-        File File = ResourceUtils.getFile("classpath:testapplications.csv");
-        List<ApplicationCSVRecord> applicationCSVRecords = new CsvToBeanBuilder<ApplicationCSVRecord>(new FileReader(File))
+    public List<ApplicationCSVRecord> getCSVData() throws IOException {
+        // This code was change to input stream to accomodate JAR deployments
+        InputStream inputStream = new ClassPathResource("testapplications.csv").getInputStream();
+        Path tempFile = Files.createTempFile("testapplications", ".csv");
+        Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+        List<ApplicationCSVRecord> applicationCSVRecords = new CsvToBeanBuilder<ApplicationCSVRecord>(new FileReader(tempFile.toFile()))
             .withType(ApplicationCSVRecord.class)
             .build()
             .parse();

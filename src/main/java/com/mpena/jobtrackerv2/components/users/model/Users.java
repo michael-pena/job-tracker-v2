@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,7 +39,8 @@ public class Users implements UserDetails {
     @Column(name="id", updatable=false, nullable=false, unique = true)
     private long id;
     
-    @Column(name="username", nullable=false, unique = true)
+    @Column(name="username", length=50, nullable=false, unique = true)
+    @Size(max=50, min=2, message = "username must between 2 and 50 chars")
     private String username;
 
     @Column(name="password", nullable=false)
