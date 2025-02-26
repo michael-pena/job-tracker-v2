@@ -104,5 +104,14 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyExistsException(AlreadyExistsException ex) {
+        
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), 
+            HttpStatus.CONFLICT.getReasonPhrase(), ex.getMessage());
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
 
 }

@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    container_name: jobtracker-v2
+    environment:
+      - name=value
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres
+    container_name: postgres_dc_jobtracker-v2
+    restart: always
+    environment:
+      - POSTGRES_DB=jobtracker
+      - POSTGRES_USER=jobtrackerAdmin
+      - POSTGRES_PASSWORD=54321
+    ports:
+      - "5432:5432"

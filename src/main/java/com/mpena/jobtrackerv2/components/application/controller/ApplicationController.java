@@ -17,7 +17,14 @@ import com.mpena.jobtrackerv2.components.application.dto.ApplicationCreateDTO;
 import com.mpena.jobtrackerv2.components.application.dto.ApplicationResponseDTO;
 import com.mpena.jobtrackerv2.components.application.dto.ApplicationUpdateDTO;
 import com.mpena.jobtrackerv2.components.application.service.ApplicationService;
+import com.mpena.jobtrackerv2.exceptions.ErrorResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +35,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Application", 
+    description = "CRUD REST API endpoints for managing applications to jobs I've applied to")
 public class ApplicationController {
 
     public static final String APPLICATION_PATH = "/api/v1/application";
@@ -35,6 +44,7 @@ public class ApplicationController {
 
     private final ApplicationService applicationService;
 
+    @ApiResponse(responseCode = "201", description = "Application Created")
     @PostMapping(APPLICATION_PATH)
     public ResponseEntity<ApplicationResponseDTO> saveNewApplication(@RequestBody @Valid ApplicationCreateDTO createDTO) {        
         ApplicationResponseDTO responseDTO = applicationService.createApplication(createDTO);
@@ -54,6 +64,16 @@ public class ApplicationController {
         return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(responseDTO);
     }
 
+    @Operation(summary = "Get Application by Id", description = "Endpoint for obtaining an Application by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Application Found"),
+        @ApiResponse(responseCode = "400", description = "Invalid Application Id",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Application Not Found", 
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = ErrorResponse.class)) )
+    })
     @GetMapping(APPLICATION_PATH_BY_ID)
     public ResponseEntity<ApplicationResponseDTO> getApplicationById(@PathVariable("applicationId") Long applicationId) {
         ApplicationResponseDTO responseDTO = applicationService.getApplicationById(applicationId);

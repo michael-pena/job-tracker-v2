@@ -1,7 +1,6 @@
 package com.mpena.jobtrackerv2.components.application.model;
 
 import com.mpena.jobtrackerv2.components.application.validation.ValidApplicationStatus;
-import com.mpena.jobtrackerv2.components.application.validation.ValidOfferForInterview;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +22,6 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @ToString
 @Accessors(chain = true)
-@ValidOfferForInterview
 public class Application {
     
     @Id

@@ -42,7 +42,7 @@ public class ApplicationService implements ApplicationOperations {
             .setStatus(updateDTO.getStatus())
             .setOffer(updateDTO.getOffer());
 
-        return applicationMapper.toDTO( applicationRepository.save(appUpdate));
+        return applicationMapper.toDTO(applicationRepository.save(appUpdate));
     }
 
 
